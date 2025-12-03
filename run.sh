@@ -3,4 +3,4 @@
 set -e
 . ./iso.sh
 
-qemu-system-i386 -cdrom bedrock.iso
+qemu-system-i386 -cdrom bedrock.iso $@
