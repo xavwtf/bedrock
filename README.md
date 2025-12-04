@@ -83,7 +83,7 @@ Fedora:
 sudo dnf install make grub2-tools-extra xorriso mtools qemu-system-x86 git --refresh
 ```
 
-> On Fedora-based systems, `grub-mkrescue` is called `grub2-mkrescue`. To reflect this, please edit `iso.sh` accordingly.
+> On Fedora-based systems, `grub-mkrescue` is called `grub2-mkrescue`. This is handled in the build script, but it's good to be aware of that.
 
 Once all build dependencies are installed, `git clone` this repository to anywhere you prefer:
 

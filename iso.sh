@@ -3,6 +3,8 @@
 set -e
 . ./build.sh
 
+GRUB_MKRESCUE=$(command -v grub-mkrescue || command -v grub2-mkrescue)
+
 mkdir -p iso
 mkdir -p iso/boot
 mkdir -p iso/boot/grub
@@ -14,4 +16,4 @@ menuentry "Bedrock" {
     multiboot /boot/bedrock.bin
 }
 EOF
-grub-mkrescue -o bedrock.iso iso
+$GRUB_MKRESCUE -o bedrock.iso iso
