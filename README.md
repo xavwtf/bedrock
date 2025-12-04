@@ -61,7 +61,9 @@ You can then proceed to build Bedrock by either running `build.sh` or `iso.sh`.
 
 You will need to build a cross-compiler for your target architecture. Specifically, you will require the `-elf` variant of the toolchain.
 
-A guide to easily building an i686-elf toolchain can be found [here](https://github.com/lordmilko/i686-elf-tools).
+In the future, a custom toolchain tailored specifically for Bedrock will be developed, but as of now no such toolchain exists.
+
+A guide to easily building an i686-elf toolchain on Debian-based systems can be found [here](https://github.com/lordmilko/i686-elf-tools).
 
 > Note: I am not responsible for the guide/tools linked. Please take any precautions, naturally.
 
