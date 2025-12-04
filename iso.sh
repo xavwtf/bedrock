@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-set -e
 . ./build.sh
 
 GRUB_MKRESCUE=$(command -v grub-mkrescue || command -v grub2-mkrescue)

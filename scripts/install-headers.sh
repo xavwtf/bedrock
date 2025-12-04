@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+#!/bin/bash -e
 . ./configure.sh
 
 mkdir -p "$SYSROOT"

@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+#!/bin/bash -e
 . scripts/install-headers.sh
 
 for PROJECT in $PROJECTS; do
