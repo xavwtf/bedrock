@@ -67,6 +67,17 @@ A guide to easily building an i686-elf toolchain can be found [here](https://git
 
 Once the cross-compiler is installed, you must install the build dependencies.
 
+Bedrock requires the following build dependencies:
+- make
+- grub
+- xorriso
+- mtools
+- git (for cloning the repository)
+
+and optionally:
+
+- qemu (to emulate Bedrock, good for quick testing)
+
 On Debian-based systems:
 
 ```bash
@@ -79,7 +90,7 @@ sudo pacman -Syu --needed make grub libisoburn mtools qemu-system-x86 git
 ```
 
 Fedora:
-```
+```bash
 sudo dnf install make grub2-tools-extra xorriso mtools qemu-system-x86 git --refresh
 ```
 
