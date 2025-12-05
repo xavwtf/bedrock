@@ -1,5 +1,5 @@
 #include <kernel/tty.h>
-#include <arch/i386/vga.h>
+#include "vga.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -12,8 +12,8 @@
 
 #define pos(x, y) y * VGA_WIDTH + x;
 
-static size_t tty_y;
 static size_t tty_x;
+static size_t tty_y;
 static size_t tty_colour;
 static uint16_t* tty_buf;
 
@@ -31,7 +31,7 @@ void tty_init(void) {
     }
 }
 
-void tty_set_colour(uint8_t colour) {
+void tty_setcolour(uint8_t colour) {
     tty_colour = colour;
 }
 

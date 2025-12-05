@@ -30,7 +30,8 @@ _start:
 
         mov $stack_top, %esp
 
-        # TODO: GDT, paging, c++ compat
+        call gdt_init
+        # TODO: paging, c++ compat
 
         call kernel_main
 
