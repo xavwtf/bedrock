@@ -1,5 +1,5 @@
 # host can be specified with make HOST={whatever}, otherwise fallback to default target
-DEFAULT_TARGET=$(shell ../default-target.sh)
+DEFAULT_TARGET=$(shell ../scripts/default-target.sh)
 HOST?=$(DEFAULT_TARGET)
 HOSTARCH=$(shell ../scripts/parse-triplet.sh $(HOST))
 

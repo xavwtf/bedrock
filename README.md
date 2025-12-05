@@ -12,7 +12,7 @@ Bedrock currently targets the following architectures:
 If you have any issues with script execution, try **running chmod +x** on all build scripts in the repo. You can run this simple command to perform this task on every build script automatically:
 
 ```bash
-find . -name "*.sh" -exec chmod +x {} \;
+find . -type f -iname "*.sh" -exec chmod +x {} \;
 ```
 
 ### Build instructions - Bedrock
