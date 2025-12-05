@@ -53,3 +53,5 @@ jobs:
           asset_path: ./bedrock.iso
           asset_name: bedrock-nightly${{ github.run_number }}-${{ env.DATE }}.iso
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
