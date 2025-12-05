@@ -5,13 +5,13 @@
 
 # define to make this a lot easier
 .macro isr_stub num
-isr_stub_\num:
+isr\num:
     call kpanic
     iret
 .endm
 
 .macro isr_stub_err num
-isr_stub_\num:
+isr\num:
     call kpanic
     iret
 .endm
@@ -53,7 +53,7 @@ isr_stub     30
 isr_stub     31
 
 .macro isr_st_entry num
-.long isr_stub_\num
+.long isr\num
 .endm
 
 # ISR stubs are populated from here
