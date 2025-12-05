@@ -32,7 +32,7 @@ jobs:
       - name: Set date variables
         id: vars
         run: |
-          echo "DATE=$(date +%Y%m%d" >> $GITHUB_ENV
+          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "DATE_FANCY=$(date +$Y/%m%d) >> $GITHUB_ENV
 
       - name: Create release
