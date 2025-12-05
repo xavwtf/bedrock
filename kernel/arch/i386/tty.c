@@ -42,13 +42,18 @@ void tty_putat(unsigned char c, uint8_t colour, size_t x, size_t y) {
 
 void tty_putc(char c) {
     unsigned char uc = c;
+
+    if (c == '\n') {
+        tty_x = 0;
+        if (++tty_y == VGA_HEIGHT) tty_y = 0;
+        return;
+    }
+    
     tty_putat(uc, tty_colour, tty_x, tty_y);
 
     if (++tty_x == VGA_WIDTH) {
         tty_x = 0;
-        if (++tty_y == VGA_HEIGHT) {
-            tty_y = 0;
-        }
+        if (++tty_y == VGA_HEIGHT) tty_y = 0;
     }
 }
 
