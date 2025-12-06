@@ -1,6 +1,7 @@
 #include "pic.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <kernel/io.h>
 
 #define PIC1_CMD        0x20
@@ -68,9 +69,21 @@ uint16_t pic_getisr(void) {
     return _pic_getreg(PIC_REG_ISR);
 }
 
-void pic_sendeoi(uint8_t irq) {
-    if (irq > 7) out8(PIC2_CMD, PIC_EOI); // if irq is handled by slave, send eoi to slave too
+void pic_sendeoimaster() {
     out8(PIC1_CMD, PIC_EOI);
+
+    return;
+}
+
+void pic_sendeoislave() {
+    out8(PIC2_CMD, PIC_EOI);
+
+    return;
+}
+
+void pic_sendeoi(uint8_t irq) {
+    if (irq > 7) pic_sendeoislave(); // if irq is handled by slave, send eoi to slave too
+    pic_sendeoimaster();
 
     return;
 }
@@ -115,4 +128,13 @@ void pic_unmaskall(void) {
     out8(PIC2_DATA, 0);
 
     return;
+}
+
+bool pic_isspurious(uint8_t vector) {
+    // a spurious irq will always be either irq7 or irq15, if the irq is not present in either master (irq7) or slave (irq15) it is spurious
+    if (vector == 7 || vector == 15) {
+        if (!((pic_getisr() >> vector) & 1)) return true;
+    }
+
+    return false;
 }
