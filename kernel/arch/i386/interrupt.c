@@ -32,9 +32,6 @@ void idt_setdescriptor(uint8_t vector, uint32_t offset, uint16_t selector, uint8
 }
 
 void interrupt_init(void) {
-    // disable interrupts, this isn't explicitly required but should we get an irq during the process we could triple fault
-    asm volatile ("cli");
-
     // zero out the idt
     memset(&idt, 0, sizeof(idt));
 

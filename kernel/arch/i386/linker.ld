@@ -2,7 +2,8 @@ ENTRY(_start)
 
 SECTIONS
 {
-    . = 2M;
+    . = 1M;
+    PROVIDE(_kstart = .);
 
     .text BLOCK(4K) : ALIGN(4K) {
         *(.multiboot)
@@ -21,4 +22,7 @@ SECTIONS
         *(COMMON)
         *(.bss)
     }
+
+    . = ALIGN(4K);
+    PROVIDE(_kend = .);
 }

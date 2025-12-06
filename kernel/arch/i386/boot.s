@@ -12,7 +12,7 @@
 .long FLAGS
 .long CHECKSUM
 
-# WE must define a stack pointer.
+# we must define a stack pointer.
 # sys-v requires us to align our stack to 16 bytes
 .section .bss
 .align 16
@@ -28,8 +28,13 @@ _start:
         # we are now in 32-bit protected mode.
         # at this point we are GOD
 
+        cli # we don't want to take interrupts until we initialise the idt
         mov $stack_top, %esp
+
         # TODO: paging
+
+        push %ebx # push the pointer of the multiboot_info_t struct
+        push %eax # push our magic value
 
         call kernel_main
 

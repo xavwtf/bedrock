@@ -38,9 +38,6 @@
     };
 
     void gdt_init(void) {
-        // disable interrupts
-        asm volatile ("cli");
-
         // write to our gdtr
         gdtr.limit = sizeof(gdt) - 1;
         gdtr.base = (struct gdt_entry*)&gdt;
@@ -74,9 +71,6 @@
         );
 
         // the gdt is now fully loaded, segment registers have our new , and we can celebrate. yay!
-        
-        // we can now re-enable interrupts
-        asm volatile ("sti");
 
         return;
     }
