@@ -32,6 +32,7 @@ _start:
 
         call gdt_init
         call interrupt_init
+        call pit_init
         # TODO: paging
 
         call kernel_main

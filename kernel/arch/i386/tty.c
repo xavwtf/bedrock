@@ -15,7 +15,7 @@
 static size_t tty_x;
 static size_t tty_y;
 static size_t tty_colour;
-static uint16_t* tty_buf;
+static volatile uint16_t* tty_buf;
 
 void tty_init(void) {
     tty_x = 0;

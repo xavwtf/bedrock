@@ -48,8 +48,8 @@ void pic_remap(uint8_t master_offset, uint8_t slave_offset) {
     out8(PIC2_DATA, ICW4_8086); // tell the slave to use 8086 mode
     io_wait();
 
-    out8(PIC1_DATA, 0); // mask master PIC
-    out8(PIC2_DATA, 0); // mask slave PIC
+    out8(PIC1_DATA, 0); // unmask master PIC
+    out8(PIC2_DATA, 0); // unmask slave PIC
 
     return;
 }
