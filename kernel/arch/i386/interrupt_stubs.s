@@ -1,5 +1,6 @@
 .section .text
 .globl isr_stub_table
+.globl irq_stub_table
 
 .extern kpanic
 
@@ -14,6 +15,40 @@ isr\num:
 isr\num:
     call kpanic
     iret
+.endm
+
+.macro irq_stub num
+irq\num:
+    push %eax
+    push %ecx
+    push %edx
+    push %ebx
+    push %ebp
+    push %esi
+    push %edi
+    push %ds
+    push %es
+    pushl $\num # push current interrupt vector to stack for dispatcher
+    call irq_dispatcher
+    add $4, %esp
+    pop %es
+    pop %ds
+    pop %edi
+    pop %esi
+    pop %ebp
+    pop %ebx
+    pop %edx
+    pop %ecx
+    pop %eax
+    iret
+.endm
+
+.macro isr_st_entry num
+.long isr\num
+.endm
+
+.macro irq_st_entry num
+.long irq\num
 .endm
 
 isr_stub     0
@@ -52,13 +87,29 @@ isr_stub     29
 isr_stub     30
 isr_stub     31
 
-.macro isr_st_entry num
-.long isr\num
-.endm
+# IRQs
+
+irq_stub     0
+irq_stub     1
+irq_stub     2
+irq_stub     3
+irq_stub     4
+irq_stub     5
+irq_stub     6
+irq_stub     7
+irq_stub     8
+irq_stub     9
+irq_stub     10
+irq_stub     11
+irq_stub     12
+irq_stub     13
+irq_stub     14
+irq_stub     15
 
 # ISR stubs are populated from here
 # okay, this pains me but GAS .rept doesn't have the capability to use values like this, so prepare for a manual expansion... using macros
 isr_stub_table:
+    isr_st_entry 0
     isr_st_entry 1
     isr_st_entry 2
     isr_st_entry 3
@@ -90,3 +141,21 @@ isr_stub_table:
     isr_st_entry 29
     isr_st_entry 30
     isr_st_entry 31
+
+irq_stub_table:
+    irq_st_entry 0
+    irq_st_entry 1
+    irq_st_entry 2
+    irq_st_entry 3
+    irq_st_entry 4
+    irq_st_entry 5
+    irq_st_entry 6
+    irq_st_entry 7
+    irq_st_entry 8
+    irq_st_entry 9
+    irq_st_entry 10
+    irq_st_entry 11
+    irq_st_entry 12
+    irq_st_entry 13
+    irq_st_entry 14
+    irq_st_entry 15
