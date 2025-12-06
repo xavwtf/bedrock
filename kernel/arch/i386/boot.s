@@ -29,10 +29,6 @@ _start:
         # at this point we are GOD
 
         mov $stack_top, %esp
-
-        call gdt_init
-        call interrupt_init
-        call pit_init
         # TODO: paging
 
         call kernel_main
