@@ -42,7 +42,7 @@
         asm volatile ("cli");
 
         // write to our gdtr
-        gdtr.limit = sizeof(struct gdt_entry) * 5 - 1;
+        gdtr.limit = sizeof(gdt) - 1;
         gdtr.base = (struct gdt_entry*)&gdt;
 
         // load gdtr into the gdtr register
@@ -73,7 +73,7 @@
             : : : "ax", "memory"
         );
 
-        // the gdt is now fully loaded, segment registers are synced, and we can celebrate. yay!
+        // the gdt is now fully loaded, segment registers have our new , and we can celebrate. yay!
         
         // we can now re-enable interrupts
         asm volatile ("sti");

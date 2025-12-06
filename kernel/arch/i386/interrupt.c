@@ -74,6 +74,7 @@ void irq_register(uint8_t irq, irq_handler_t handler) {
 
 void irq_dispatcher(uint32_t irq) {
     if (irq >= 16) return; // uhh
+
     if (pic_isspurious(irq)) {
         if (irq == 15) pic_sendeoimaster();
         return;
@@ -83,6 +84,7 @@ void irq_dispatcher(uint32_t irq) {
         irq_handlers[irq]();
     } else {
         // do nothing for now
+        // TODO: add default IRQ handler
     }
 
     pic_sendeoi(irq);

@@ -2,9 +2,11 @@
 .globl isr_stub_table
 .globl irq_stub_table
 
+.include "arch/i386/macros.inc"
+
 .extern kpanic
 
-# define to make this a lot easier
+# define macros to make this a lot easier
 .macro isr_stub num
 isr\num:
     call kpanic
@@ -19,13 +21,7 @@ isr\num:
 
 .macro irq_stub num
 irq\num:
-    push %eax
-    push %ecx
-    push %edx
-    push %ebx
-    push %ebp
-    push %esi
-    push %edi
+    pushad
     push %ds
     push %es
     pushl $\num # push current interrupt vector to stack for dispatcher
@@ -33,13 +29,7 @@ irq\num:
     add $4, %esp
     pop %es
     pop %ds
-    pop %edi
-    pop %esi
-    pop %ebp
-    pop %ebx
-    pop %edx
-    pop %ecx
-    pop %eax
+    popad
     iret
 .endm
 

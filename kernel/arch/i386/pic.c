@@ -131,7 +131,7 @@ void pic_unmaskall(void) {
 }
 
 bool pic_isspurious(uint8_t vector) {
-    // a spurious irq will always be either irq7 or irq15, if the irq is not present in either master (irq7) or slave (irq15) it is spurious
+    // a spurious irq will always be either irq7 or irq15, if the irq is not present in either master's (irq7) or slave's (irq15) isr then it is spurious
     if (vector == 7 || vector == 15) {
         if (!((pic_getisr() >> vector) & 1)) return true;
     }
