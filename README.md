@@ -53,7 +53,7 @@ Windows (PowerShell):
 docker run --rm -it -v ${pwd}:/bedrock bedrock-kernel-i386
 ```
 
-You can then proceed to build Bedrock by either running `build.sh` or `iso.sh`.
+You can then proceed to build Bedrock by either running `make build` or `make iso`.
 
 > Note: Using QEMU with graphics enabled from within the Docker container will not work on WSL-based containers (at least) due to environment issues. Please `exit` the container and run the script from your host operating system.
 
@@ -104,10 +104,10 @@ Once all build dependencies are installed, `git clone` this repository to anywhe
 git clone https://github.com/xavvvvxd/bedrock
 ```
 
-`cd` into the newly created directory and run `iso.sh`:
+`cd` into the newly created directory and run `make iso`:
 
 ```bash
-cd bedrock && ./iso.sh
+cd bedrock && make iso
 ```
 
 (or run.sh, both build the operating system)
@@ -170,5 +170,5 @@ git clone https://github.com/xavvvvxd/bedrock
 `cd` into it and run:
 
 ```bash
-./build.sh
+make build
 ```
