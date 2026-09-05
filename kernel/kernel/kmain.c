@@ -9,6 +9,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdint.h>
 
 void kernel_main(uint32_t magic, multiboot_info_t* mbi) {
     tty_init();
