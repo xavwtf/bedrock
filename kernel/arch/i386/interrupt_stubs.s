@@ -5,31 +5,43 @@
 .include "arch/i386/macros.inc"
 
 .extern kpanic
+.extern irq_dispatcher
+.extern exception_dispatcher
 
 # define macros to make this a lot easier
 .macro isr_stub num
 isr\num:
-    call kpanic
-    iret
+    pushl $0 # dummy error code for interrupts that don't push one
+    pushl $\num
+    jmp isr_common
 .endm
 
 .macro isr_stub_err num
 isr\num:
-    call kpanic
-    iret
+    pushl $\num
+    jmp isr_common
 .endm
 
 .macro irq_stub num
 irq\num:
-    pushad
-    push %ds
-    push %es
-    pushl $\num # push current interrupt vector to stack for dispatcher
+    pushal
+
+    pushl %ds
+    pushl %es
+
+    movw $0x10, %ax
+    movw %ax, %ds
+    movw %ax, %es
+
+    pushl $\num
     call irq_dispatcher
-    add $4, %esp
-    pop %es
-    pop %ds
-    popad
+    addl $4, %esp
+
+    popl %es
+    popl %ds
+
+    popal
+
     iret
 .endm
 
@@ -40,6 +52,28 @@ irq\num:
 .macro irq_st_entry num
 .long irq\num
 .endm
+
+isr_common:
+    pushal
+
+    pushl %ds
+    pushl %es
+
+    movw $0x10, %ax
+    movw %ax, %ds
+    movw %ax, %es
+
+    pushl %esp
+    call exception_dispatcher
+    addl $4, %esp
+
+    popl %es
+    popl %ds
+
+    popal
+
+    addl $8, %esp
+    iret
 
 isr_stub     0
 isr_stub     1

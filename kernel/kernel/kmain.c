@@ -16,7 +16,7 @@ void kernel_main(uint32_t magic, multiboot_info_t* mbi) {
 
     // check our bootloader magic value. if it doesn't match expected, panic
     if (magic != MULTIBOOT_BOOTLOADER_MAGIC) {
-        kpanic();
+        kpanic("Invalid bootloader magic value.");
     }
 
     #if defined(__i386__)
@@ -25,7 +25,7 @@ void kernel_main(uint32_t magic, multiboot_info_t* mbi) {
     pit_init();
     #endif
 
-    printf("Hello world!\n");
+    printf("Hello world!\nBootloader: %s", (char*)mbi->boot_loader_name);
 
     for (;;);
 }

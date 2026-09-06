@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <kernel/panic.h>
 
 struct idt_entry {
     uint16_t offset_low;
@@ -22,6 +23,41 @@ extern uint32_t isr_stub_table[];
 extern uint32_t irq_stub_table[];
 
 static volatile irq_handler_t irq_handlers[16];
+
+static const char *exception_names[32] = {
+    "Divide Error",
+    "Debug",
+    "Non-Maskable Interrupt",
+    "Breakpoint",
+    "Overflow",
+    "Bound Range Exceeded",
+    "Invalid Opcode",
+    "Device Not Available",
+    "Double Fault",
+    "Reserved",
+    "Invalid TSS",
+    "Segment Not Present",
+    "Stack-Segment Fault",
+    "General Protection Fault",
+    "Page Fault",
+    "Reserved",
+    "x87 Floating-Point Exception",
+    "Alignment Check",
+    "Machine Check",
+    "SIMD Floating-Point Exception",
+    "Virtualization Exception",
+    "Control Protection Exception",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Hypervisor Injection Exception",
+    "VMM Communication Exception",
+    "Security Exception",
+    "Reserved"
+};
 
 void idt_setdescriptor(uint8_t vector, uint32_t offset, uint16_t selector, uint8_t flags) {
     idt[vector].offset_low = offset & 0xFFFF;
@@ -58,7 +94,7 @@ void interrupt_init(void) {
         : : "r"(&idtr)
     );
 
-    // we can re-enable interrupts now, and they should be mapped to our new isrs.
+    // we can enable interrupts now, and they should be mapped to our new isrs.
     asm volatile ("sti");
 
     // the idt should now be set up, nice.
@@ -66,6 +102,8 @@ void interrupt_init(void) {
 }
 
 void irq_register(uint8_t irq, irq_handler_t handler) {
+    if (irq >= 16) return;
+
     irq_handlers[irq] = handler;
 }
 
@@ -85,4 +123,10 @@ void irq_dispatcher(uint32_t irq) {
     }
 
     pic_sendeoi(irq);
+}
+
+void exception_dispatcher(struct interrupt_frame* frame) {
+    const char* name = exception_names[frame->vector];
+
+    kpanic_exception(name, frame);
 }
