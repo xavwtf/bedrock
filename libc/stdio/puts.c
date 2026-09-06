@@ -5,9 +5,5 @@
 #endif
 
 int puts(const char* str) {
-#if defined(__is_libk)
-    tty_puts(str);
-#else
-    // TODO: libc equivalent
-#endif
+    return printf("%s\n", str);
 }

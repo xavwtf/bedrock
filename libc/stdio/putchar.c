@@ -11,4 +11,5 @@ int putchar(int in_c) {
 #else
     // TODO: libc equivalent
 #endif
+    return in_c;
 }
