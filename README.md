@@ -25,7 +25,7 @@ We provide Dockerfiles designed for cross-compiling Bedrock in `buildenv`. It in
 To build Bedrock using Docker, first run the following command (ensure `git` is installed)
 
 ```bash
-git clone https://github.com/xavvvvxd/bedrock
+git clone https://github.com/xavwtf/bedrock
 ```
 
 Next, build your chosen Dockerfile (depending on what architecture you would like to cross-compile for)
@@ -101,7 +101,7 @@ sudo dnf install make grub2-tools-extra xorriso mtools qemu-system-x86 git --ref
 Once all build dependencies are installed, `git clone` this repository to anywhere you prefer:
 
 ```bash
-git clone https://github.com/xavvvvxd/bedrock
+git clone https://github.com/xavwtf/bedrock
 ```
 
 `cd` into the newly created directory and run `make iso`:
@@ -164,7 +164,7 @@ brew install make git
 Download the repository locally:
 
 ```bash
-git clone https://github.com/xavvvvxd/bedrock
+git clone https://github.com/xavwtf/bedrock
 ```
 
 `cd` into it and run:
